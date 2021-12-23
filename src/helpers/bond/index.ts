@@ -40,8 +40,8 @@ export const wavax = new CustomBond({
     // tokensInStrategy: "756916000000000000000000",
 });
 
-export const mimBounty = new LPBond({
-    name: "mim_bounty_lp",
+export const mimSPC = new LPBond({
+    name: "mim_spc_lp",
     displayName: "SPC-MIM LP",
     bondToken: "MIM",
     bondIconSvg: MimTimeIcon,
@@ -57,7 +57,7 @@ export const mimBounty = new LPBond({
 });
 
 
-export const avaxBounty = new CustomLPBond({
+export const avaxSPC = new CustomLPBond({
     name: "avax_verse_lp",
     displayName: "VERSE-AVAX LP",
     bondToken: "AVAX",
