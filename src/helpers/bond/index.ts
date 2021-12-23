@@ -42,7 +42,7 @@ export const wavax = new CustomBond({
 
 export const mimBounty = new LPBond({
     name: "mim_bounty_lp",
-    displayName: "BOUNTY-MIM LP",
+    displayName: "SPC-MIM LP",
     bondToken: "MIM",
     bondIconSvg: MimTimeIcon,
     bondContractABI: LpBondContract,

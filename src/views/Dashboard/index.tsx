@@ -91,7 +91,7 @@ function Dashboard() {
                         <Grid item lg={6} md={6} sm={6} xs={12}>
                             <div className="dashboard-card">
                                 <p className="card-title">Current Index</p>
-                                <p className="card-value">{isAppLoading ? <Skeleton width="250px" /> : `${trim(Number(app.currentIndex), 2)} BOUNTY`}</p>
+                                <p className="card-value">{isAppLoading ? <Skeleton width="250px" /> : `${trim(Number(app.currentIndex), 2)} SPC`}</p>
                             </div>
                         </Grid>
 
@@ -115,7 +115,7 @@ function Dashboard() {
 
                         <Grid item lg={6} md={6} sm={6} xs={12}>
                             <div className="dashboard-card">
-                                <p className="card-title">Backing per $BOUNTY</p>
+                                <p className="card-title">Backing per SPC</p>
                                 <p className="card-value">
                                     {isAppLoading ? (
                                         <Skeleton width="250px" />
