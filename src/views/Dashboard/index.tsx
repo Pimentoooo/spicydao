@@ -98,7 +98,7 @@ function Dashboard() {
                         <Grid item lg={6} md={6} sm={6} xs={12}>
                             <div className="dashboard-card">
                                 <p className="card-title">Treasury Balance</p>
-                                <p className="card-value">
+                                <p className="card-value" style={{wordBreak: "break-all"}}>
                                     {isAppLoading ? (
                                         <Skeleton width="250px" />
                                     ) : (
