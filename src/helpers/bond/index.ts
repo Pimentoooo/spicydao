@@ -18,8 +18,8 @@ export const mim = new StableBond({
     reserveContractAbi: StableReserveContract,
     networkAddrs: {
         [Networks.AVAX]: {
-            bondAddress: "0x54Bc26D3bF1260811D934f55dF2AbDED4C2e57d7",
-            reserveAddress: "0x130966628846BFd36ff31a822705796e8cb8C18D",
+            bondAddress: "0x24B330a84A3A8114fCb8A29C80c0b39B6bFF5bb2",
+            reserveAddress: "0x130966628846bfd36ff31a822705796e8cb8c18d",
         },
     },
     // tokensInStrategy: "60500000000000000000000000",
@@ -51,7 +51,7 @@ export const mimBounty = new LPBond({
     networkAddrs: {
         [Networks.AVAX]: {
             bondAddress: "0xbB6bB0a603d2926C8ABeb3cE857aE16F68a052d2",
-            reserveAddress: "0x671086E7149043eeE2D93F00bF66788B3ecd35e8",
+            reserveAddress: "0x910fA8fcd781AcCaa82CD544Ac235Ba921927494",
         },
     },
     lpUrl: "https://www.traderjoexyz.com/#/pool/0x130966628846BFd36ff31a822705796e8cb8C18D/0xae9f98865fD356a4709cE4fc9FB384AD5a323b1E",
