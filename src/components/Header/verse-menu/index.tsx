@@ -58,8 +58,8 @@ function VerseMenu() {
                 {({ TransitionProps }) => (
                     <Fade {...TransitionProps} timeout={200}>
                         <div className="tooltip">
-                            <Link className="tooltip-item" href={`https://www.traderjoexyz.com/#/trade?inputCurrency=&outputCurrency=${SPC_ADDRESS}`} target="_blank">
-                                <p>Buy on Trader Joe</p>
+                            <Link className="tooltip-item" href={`https://app.pangolin.exchange/#/swap?outputCurrency=${SPC_ADDRESS}`} target="_blank">
+                                <p>Buy on Pangolin</p>
                             </Link>
 
                             {isEthereumAPIAvailable && (
