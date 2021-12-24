@@ -102,7 +102,31 @@ function App() {
         }
     }, [connected]);
 
-    if (isAppLoading) return <Loading />;
+    useEffect(() => {
+        const updateAppDetailsInterval = setInterval(() => {
+            loadDetails("app");
+            loadDetails("userBonds");
+        }, 1000 * 30);
+        return () => {
+          clearInterval(updateAppDetailsInterval);
+        };
+      }, []);
+    
+      useEffect(() => {
+        if (walletChecked) {
+          const updateAccountDetailInterval = setInterval(() => {
+            loadDetails("app");
+            loadDetails("account");
+            loadDetails("userBonds");
+            loadDetails("userTokens");
+          }, 1000 * 30 * 10);
+          return () => {
+            clearInterval(updateAccountDetailInterval);
+          };
+        }
+      }, [walletChecked]);
+
+    // if (isAppLoading) return <Loading />;
 
     return (
         <ViewBase>
