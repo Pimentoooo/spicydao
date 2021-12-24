@@ -4,7 +4,7 @@ import { StableBond, CustomBond } from "./stable-bond";
 
 import MimIcon from "../../assets/tokens/MIM.svg";
 import AvaxIcon from "../../assets/tokens/AVAX.svg";
-import MimTimeIcon from "../../assets/tokens/TIME-MIM.svg";
+import MimSPCIcon from "../../assets/tokens/spc-mim.png";
 import AvaxTimeIcon from "../../assets/tokens/TIME-AVAX.svg";
 
 import { StableBondContract, LpBondContract, WavaxBondContract, StableReserveContract, LpReserveContract } from "../../abi";
@@ -44,16 +44,16 @@ export const mimSPC = new LPBond({
     name: "mim_spc_lp",
     displayName: "SPC-MIM LP",
     bondToken: "MIM",
-    bondIconSvg: MimTimeIcon,
+    bondIconSvg: MimSPCIcon,
     bondContractABI: LpBondContract,
     reserveContractAbi: LpReserveContract,
     networkAddrs: {
         [Networks.AVAX]: {
-            bondAddress: "0xbB6bB0a603d2926C8ABeb3cE857aE16F68a052d2",
+            bondAddress: "0xC59c97065873a433431A880e5a30888605323D87",
             reserveAddress: "0x910fA8fcd781AcCaa82CD544Ac235Ba921927494",
         },
     },
-    lpUrl: "https://www.traderjoexyz.com/#/pool/0x130966628846BFd36ff31a822705796e8cb8C18D/0xae9f98865fD356a4709cE4fc9FB384AD5a323b1E",
+    lpUrl: "https://app.pangolin.exchange/#/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0x6007FCA39B5398FeaC4D06D75435A564A086Bab8",
 });
 
 
@@ -74,4 +74,4 @@ export const avaxSPC = new CustomLPBond({
 });
 
 // export default [mim, wavax, mimTime, avaxTime];
-export default [mim];
+export default [mim, mimSPC];
