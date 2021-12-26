@@ -288,7 +288,7 @@ function Stake() {
                                             <div className="data-row">
                                                 <p className="data-row-name">Your Warm Up Balance</p>
                                                 <p className="data-row-value">
-                                                    {isAppLoading ? <Skeleton width="80px" /> : <>{trimmedDepositAmount} sPAPA</>}
+                                                    {isAppLoading ? <Skeleton width="80px" /> : <>{trimmedDepositAmount} SPICY</>}
                                                 </p>
                                             </div>
                                             <div className="data-row">
