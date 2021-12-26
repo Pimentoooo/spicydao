@@ -59,6 +59,7 @@ export const loadAppDetails = createAsyncThunk(
 
         const currentIndex = await stakingContract.index();
         const nextRebase = epoch.endTime;
+        const epochNumber = epoch.number;
 
         const treasuryRunway = rfvTreasury / circSupply;
         const runway = Math.log(treasuryRunway) / Math.log(1 + stakingRebase) / 3;
@@ -79,6 +80,7 @@ export const loadAppDetails = createAsyncThunk(
             nextRebase,
             rfv,
             runway,
+            epochNumber
         };
     },
 );
@@ -105,6 +107,7 @@ export interface IAppSlice {
     totalSupply: number;
     rfv: number;
     runway: number;
+    epochNumber: number;
 }
 
 const appSlice = createSlice({

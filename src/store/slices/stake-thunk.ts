@@ -116,3 +116,92 @@ export const changeStake = createAsyncThunk("stake/changeStake", async ({ action
     dispatch(info({ text: messages.your_balance_updated }));
     return;
 });
+
+interface IActionValueAsyncThunk {
+    provider: StaticJsonRpcProvider | JsonRpcProvider;
+    address: string;
+    networkID: Networks;
+}
+
+export const changeForfeit = createAsyncThunk(
+    "stake/forfeit",
+    async ({ provider, address, networkID }: IActionValueAsyncThunk, { dispatch }) => {
+      if (!provider) {
+        dispatch(warning({ text: messages.please_connect_wallet }));
+        return;
+      }
+  
+      const signer = provider.getSigner();
+      const addresses = getAddresses(networkID);
+      const staking = new ethers.Contract(addresses.STAKING_ADDRESS as string, StakingContract, signer);
+      let forfeitTx;
+  
+      try {
+        forfeitTx = await staking.forfeit();
+        const text = "Forfeiting";
+        const pendingTxnType = "forfeiting";
+        dispatch(fetchPendingTxns({ txnHash: forfeitTx.hash, text, type: pendingTxnType }));
+        await forfeitTx.wait();
+        // dispatch(
+        //   fetchAccountSuccess({
+        //     staking: {
+        //       mamaStake: +stakeAllowance,
+        //       mamaUnstake: +unstakeAllowance,
+        //     },
+        //   })
+        //   // success(messages.tx_successfully_send)
+        //   );
+      } catch (e: any) {
+        // return metamaskErrorWrap(e, dispatch);
+        return false;
+      } finally {
+        if (forfeitTx) {
+          dispatch(clearPendingTxn(forfeitTx.hash));
+        }
+      }
+      // await sleep(7);
+      // dispatch(info(messages.balance_update_soon));
+      // await sleep(15);
+      // await dispatch(loadAccountDetails({ address, networkID, provider }));
+      // dispatch(info(messages.balance_updated));
+      return;
+    },
+  );
+  
+  export const changeClaim = createAsyncThunk(
+    "stake/changeClaim",
+    async ({ provider, address, networkID }: IActionValueAsyncThunk, { dispatch }) => {
+      if (!provider) {
+        dispatch(warning({ text: messages.please_connect_wallet }));
+        return;
+      }
+  
+      const signer = provider.getSigner();
+      const addresses = getAddresses(networkID);
+      const staking = new ethers.Contract(addresses.STAKING_ADDRESS as string, StakingContract, signer);
+      let claimTx;
+  
+      try {
+        claimTx = await staking.claim(address);
+        const text = "Claiming";
+        const pendingTxnType = "claiming";
+        dispatch(fetchPendingTxns({ txnHash: claimTx.hash, text, type: pendingTxnType }));
+        await claimTx.wait();
+        // dispatch(success(messages.tx_successfully_send));
+      } catch (e: any) {
+        // return metamaskErrorWrap(e, dispatch);
+        return false;
+      } finally {
+        if (claimTx) {
+          dispatch(clearPendingTxn(claimTx.hash));
+        }
+      }
+      // await sleep(7);
+      // dispatch(info(messages.balance_update_soon));
+      // await sleep(7);
+      // await dispatch(loadAccountDetails({ address, networkID, provider }));
+      // dispatch(info(messages.balance_updated));
+      // return;
+    },
+  );
+  

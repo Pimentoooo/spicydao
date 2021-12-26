@@ -1,6 +1,6 @@
 import { ethers } from "ethers";
 import { getAddresses } from "../../constants";
-import { VerseTokenContract, sVerseTokenContract, MimTokenContract, wsVerseTokenContract } from "../../abi";
+import { VerseTokenContract, sVerseTokenContract, MimTokenContract, wsVerseTokenContract, StakingContract } from "../../abi";
 import { setAll } from "../../helpers";
 
 import { createSlice, createSelector, createAsyncThunk } from "@reduxjs/toolkit";
@@ -64,6 +64,10 @@ interface IUserAccountDetails {
     wrapping: {
         sverse: number;
     };
+    warmup: {
+        warmupAmount: string;
+        expiryBlock: number;
+    }
 }
 
 export const loadAccountDetails = createAsyncThunk("account/loadAccountDetails", async ({ networkID, provider, address }: ILoadAccountDetails): Promise<IUserAccountDetails> => {
@@ -75,6 +79,9 @@ export const loadAccountDetails = createAsyncThunk("account/loadAccountDetails",
 
     let stakeAllowance = 0;
     let unstakeAllowance = 0;
+
+    let depositAmount = 0;
+    let expiry = 0;
 
     const addresses = getAddresses(networkID);
 
@@ -99,6 +106,10 @@ export const loadAccountDetails = createAsyncThunk("account/loadAccountDetails",
         wsverseBalance = await wsverseContract.balanceOf(address);
     }
 
+    const stakingContract = new ethers.Contract(addresses.STAKING_ADDRESS as string, StakingContract, provider,);
+    depositAmount = (await stakingContract.warmupInfo(address)).deposit;
+    expiry = (await stakingContract.warmupInfo(address)).expiry;
+
     return {
         balances: {
             sverse: ethers.utils.formatUnits(sverseBalance, "gwei"),
@@ -111,6 +122,10 @@ export const loadAccountDetails = createAsyncThunk("account/loadAccountDetails",
         },
         wrapping: {
             sverse: Number(sverseWsverseAllowance),
+        },
+        warmup: {
+            warmupAmount: ethers.utils.formatUnits(depositAmount, "gwei"),
+            expiryBlock: expiry,
         },
     };
 });
@@ -259,6 +274,10 @@ export interface IAccountSlice {
     wrapping: {
         sverse: number;
     };
+    warmup: {
+        warmupAmount: string;
+        expiryBlock: number;
+    }
     tokens: { [key: string]: IUserTokenDetails };
 }
 
@@ -269,6 +288,9 @@ const initialState: IAccountSlice = {
     staking: { verse: 0, sverse: 0 },
     wrapping: { sverse: 0 },
     tokens: {},
+    warmup: {
+        warmupAmount: "", expiryBlock: 0
+    }
 };
 
 const accountSlice = createSlice({
