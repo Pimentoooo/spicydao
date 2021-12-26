@@ -10,7 +10,7 @@ import { Bond } from "../../helpers/bond/bond";
 import { Networks } from "../../constants/blockchain";
 import { getBondCalculator } from "../../helpers/bond-calculator";
 import { RootState } from "../store";
-import { avaxSPC, wavax } from "../../helpers/bond";
+import { avaxSPC, wavax, daiSPC } from "../../helpers/bond";
 import { error, warning, success, info } from "../slices/messages-slice";
 import { messages } from "../../constants/messages";
 import { getGasPrice } from "../../helpers/get-gas-price";
@@ -168,6 +168,9 @@ export const calcBondDetails = createAsyncThunk("bonding/calcBondDetails", async
         if (bond.name === avaxSPC.name) {
             const avaxPrice = getTokenPrice("AVAX");
             purchased = purchased * avaxPrice;
+        }
+        if (bond.name == daiSPC.name) {
+            purchased = purchased * 1000000000;
         }
     } else {
         if (bond.tokensInStrategy) {

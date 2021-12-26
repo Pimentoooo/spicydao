@@ -9,7 +9,7 @@ import DaiSPCIcon from "../../assets/tokens/spc-dai.png";
 import AvaxTimeIcon from "../../assets/tokens/TIME-AVAX.svg";
 import DAIIcon from "../../assets/tokens/DAI.e.svg"
 
-import { StableBondContract, LpBondContract, WavaxBondContract, StableReserveContract, LpReserveContract } from "../../abi";
+import { StableBondContract, LpBondContract, WavaxBondContract, StableReserveContract, LpReserveContract, JoeLpReserveContract } from "../../abi";
 
 export const mim = new StableBond({
     name: "mim",
@@ -79,7 +79,7 @@ export const daiSPC = new LPBond({
     bondToken: "DAI",
     bondIconSvg: DaiSPCIcon,
     bondContractABI: LpBondContract,
-    reserveContractAbi: LpReserveContract,
+    reserveContractAbi: JoeLpReserveContract,
     networkAddrs: {
         [Networks.AVAX]: {
             bondAddress: "0x0a235951b775b89d3d531757787ce7b605f3afc0",
