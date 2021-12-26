@@ -6,6 +6,7 @@ import MimIcon from "../../assets/tokens/MIM.svg";
 import AvaxIcon from "../../assets/tokens/AVAX.svg";
 import MimSPCIcon from "../../assets/tokens/spc-mim.png";
 import AvaxTimeIcon from "../../assets/tokens/TIME-AVAX.svg";
+import DAIIcon from "../../assets/tokens/DAI.e.svg"
 
 import { StableBondContract, LpBondContract, WavaxBondContract, StableReserveContract, LpReserveContract } from "../../abi";
 
@@ -20,6 +21,21 @@ export const mim = new StableBond({
         [Networks.AVAX]: {
             bondAddress: "0x24B330a84A3A8114fCb8A29C80c0b39B6bFF5bb2",
             reserveAddress: "0x130966628846bfd36ff31a822705796e8cb8c18d",
+        },
+    },
+});
+
+export const dai = new StableBond({
+    name: "dai",
+    displayName: "DAI",
+    bondToken: "DAI",
+    bondIconSvg: DAIIcon,
+    bondContractABI: StableBondContract,
+    reserveContractAbi: StableReserveContract,
+    networkAddrs: {
+        [Networks.AVAX]: {
+            bondAddress: "0x793393a2a0E2dCeAba687c139F657BdC9259335D",
+            reserveAddress: "0xd586e7f844cea2f87f50152665bcbc2c279d8d70",
         },
     },
 });
@@ -74,4 +90,4 @@ export const avaxSPC = new CustomLPBond({
 });
 
 // export default [mim, wavax, mimTime, avaxTime];
-export default [mim, mimSPC];
+export default [mim, mimSPC, dai];

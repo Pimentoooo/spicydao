@@ -39,6 +39,17 @@ function Stake() {
     const unstakeAllowance = useSelector<IReduxState, number>(state => {
         return state.account.staking && state.account.staking.sverse;
     });
+    const currentEpochNumber = useSelector<IReduxState, number>(state => {
+        return state.app.epochNumber;
+    });
+    const depositAmount = useSelector<IReduxState, string>(state =>{
+        return state.account.warmup && state.account.warmup.warmupAmount;
+      });
+    
+    const expiry = useSelector<IReduxState, number>(state =>{
+    return state.account.warmup && state.account.warmup.expiryBlock;
+    });
+    const warupRebaseTime = expiry - currentEpochNumber;
     const stakingRebase = useSelector<IReduxState, number>(state => {
         return state.app.stakingRebase;
     });
