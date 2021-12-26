@@ -4,6 +4,7 @@ export { abi as WavaxBondContract } from "./bonds/WavaxContract.json";
 
 export { abi as StableReserveContract } from "./reserves/StableContract.json";
 export { abi as LpReserveContract } from "./reserves/LpContract.json";
+export { abi as JoeLpReserveContract } from "./reserves/JoeLpContract.json";
 
 export { abi as sVerseTokenContract } from "./tokens/sVerseContract.json";
 export { abi as VerseTokenContract } from "./tokens/VerseContract..json";
