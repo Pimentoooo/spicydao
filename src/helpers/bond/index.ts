@@ -5,6 +5,7 @@ import { StableBond, CustomBond } from "./stable-bond";
 import MimIcon from "../../assets/tokens/MIM.svg";
 import AvaxIcon from "../../assets/tokens/AVAX.svg";
 import MimSPCIcon from "../../assets/tokens/spc-mim.png";
+import DaiSPCIcon from "../../assets/tokens/spc-dai.png";
 import AvaxTimeIcon from "../../assets/tokens/TIME-AVAX.svg";
 import DAIIcon from "../../assets/tokens/DAI.e.svg"
 
@@ -72,6 +73,21 @@ export const mimSPC = new LPBond({
     lpUrl: "https://app.pangolin.exchange/#/add/0x130966628846BFd36ff31a822705796e8cb8C18D/0x6007FCA39B5398FeaC4D06D75435A564A086Bab8",
 });
 
+export const daiSPC = new LPBond({
+    name: "dai_spc_lp",
+    displayName: "SPC-DAI LP",
+    bondToken: "DAI",
+    bondIconSvg: DaiSPCIcon,
+    bondContractABI: LpBondContract,
+    reserveContractAbi: LpReserveContract,
+    networkAddrs: {
+        [Networks.AVAX]: {
+            bondAddress: "0x0a235951b775b89d3d531757787ce7b605f3afc0",
+            reserveAddress: "0x2FB85dc23D5aC0130cEA07EF8736bB091b03117d",
+        },
+    },
+    lpUrl: "https://traderjoexyz.com/#/pool/0xd586E7F844cEa2F87f50152665BCbc2C279D8d70/0x6007FCA39B5398FeaC4D06D75435A564A086Bab8",
+});
 
 export const avaxSPC = new CustomLPBond({
     name: "avax_verse_lp",
@@ -90,4 +106,4 @@ export const avaxSPC = new CustomLPBond({
 });
 
 // export default [mim, wavax, mimTime, avaxTime];
-export default [mim, mimSPC, dai];
+export default [mim, mimSPC, dai, daiSPC];
