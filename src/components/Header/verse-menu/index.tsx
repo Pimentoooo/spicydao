@@ -62,6 +62,10 @@ function VerseMenu() {
                                 <p>Buy on Pangolin</p>
                             </Link>
 
+                            <Link className="tooltip-item" href={`https://traderjoexyz.com/#/trade?outputCurrency=${SPC_ADDRESS}`} target="_blank">
+                                <p>Buy on Tradejoe</p>
+                            </Link>
+
                             {isEthereumAPIAvailable && (
                                 <div className="add-tokens">
                                     <div className="divider" />
