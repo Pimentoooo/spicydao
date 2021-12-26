@@ -1,9 +1,9 @@
 import { useState, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Grid, InputAdornment, OutlinedInput, Zoom } from "@material-ui/core";
+import { Grid, InputAdornment, OutlinedInput, Zoom, Button, Box, Typography } from "@material-ui/core";
 import RebaseTimer from "../../components/RebaseTimer";
 import { trim } from "../../helpers";
-import { changeStake, changeApproval } from "../../store/slices/stake-thunk";
+import { changeStake, changeApproval, changeClaim, changeForfeit } from "../../store/slices/stake-thunk";
 import "./stake.scss";
 import { useWeb3Context } from "../../hooks";
 import { IPendingTxn, isPendingTxn, txnButtonText } from "../../store/slices/pending-txns-slice";
@@ -49,7 +49,7 @@ function Stake() {
     const expiry = useSelector<IReduxState, number>(state =>{
     return state.account.warmup && state.account.warmup.expiryBlock;
     });
-    const warupRebaseTime = expiry - currentEpochNumber;
+    const warmupRebaseTime = expiry - currentEpochNumber;
     const stakingRebase = useSelector<IReduxState, number>(state => {
         return state.app.stakingRebase;
     });
@@ -105,6 +105,23 @@ function Stake() {
     const trimmedStakingAPY = trim(stakingAPY * 100, 1);
     const stakingRebasePercentage = trim(stakingRebase * 100, 4);
     const nextRewardValue = trim((Number(stakingRebasePercentage) / 100) * Number(trimmedSverseBalance), 6);
+
+    const onFofeit = async() => {
+        await dispatch(changeForfeit({ address, provider, networkID: chainID }));
+      };
+    
+      const onClaim = async() => {
+        await dispatch(changeClaim({ address, provider, networkID: chainID }));
+      }
+    
+    const trimmedDepositAmount = Number(
+    [depositAmount]
+        .filter(Boolean)
+        .map(amount => Number(amount))
+        .reduce((a, b) => a + b, 0)
+        .toFixed(4),
+    );
+    console.log("debug", trimmedDepositAmount);
 
     return (
         <div className="stake-view">
@@ -265,6 +282,51 @@ function Stake() {
                                             <p className="data-row-value">{isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(verseBalance), 4)} SPC</>}</p>
                                         </div>
 
+                                        {trimmedDepositAmount && trimmedDepositAmount > 0 ?
+                                              
+                                            <>
+                                            <div className="data-row">
+                                                <p className="data-row-name">Your Warm Up Balance</p>
+                                                <p className="data-row-value">
+                                                    {isAppLoading ? <Skeleton width="80px" /> : <>{trimmedDepositAmount} sPAPA</>}
+                                                </p>
+                                            </div>
+                                            <div className="data-row">
+                                                <p className="data-row-name">Pending Warm Up Till Release</p>
+                                                <p className="data-row-value">
+                                                {warmupRebaseTime >= 1 ? 
+                                                    <>{isAppLoading ? <Skeleton width="80px" style={{marginLeft:"auto"}}/> : <>{trim(warmupRebaseTime, 4)} Rebase(s) left till claimable</>}
+                                                    <div style={{textAlign: "right"}}>
+                                                    <Button 
+                                                        className="exit-button"
+                                                        variant="outlined" 
+                                                        color="primary"
+                                                        disabled={isPendingTxn(pendingTransactions, "forfeiting")}
+                                                        onClick={() => {
+                                                        onFofeit();
+                                                        }}
+                                                    >
+                                                        {txnButtonText(pendingTransactions, "forfeiting", "EXIT Warm Up")}
+                                                    </Button>
+                                                    </div>
+                                                    </>
+                                                    :
+                                                    <Button 
+                                                        className="stake-button"
+                                                        variant="outlined" 
+                                                        color="primary"
+                                                        disabled={isPendingTxn(pendingTransactions, "claiming")}
+                                                        onClick={() => {
+                                                        onClaim();
+                                                        }}
+                                                    >
+                                                        {txnButtonText(pendingTransactions, "claiming", "Claim")}
+                                                    </Button>
+                                                }                                
+                                                </p>
+                                            </div>
+                                            </>:<></>} 
+
                                         <div className="data-row">
                                             <p className="data-row-name">Your Staked Balance</p>
                                             <p className="data-row-value">{isAppLoading ? <Skeleton width="80px" /> : <>{trimmedSverseBalance} SPICY</>}</p>
@@ -285,6 +347,21 @@ function Stake() {
                                             <p className="data-row-value">{isAppLoading ? <Skeleton width="80px" /> : <>{trim(Number(fiveDayRate) * 100, 4)}%</>}</p>
                                         </div>
                                     </div>
+                                    <Box className="stake-warmup-text " display="flex" alignItems="center">
+                                        <p style={{color: "white"}}>
+                                            Note: There is a 3 epoch warm-up staking period, 
+                                            where users must be staked for more than 3 epoch/rebase before claiming any rebase rewards. 
+                                            Users will accumulate rewards while in the warm-up period but will not be able to claim them for 3 epoch. 
+                                            When 3 epoch has elapsed your staked balance can be claimed from the warm up contract and you will 
+                                            automatically receive the rebase rewards thereafter.
+                                        </p>
+
+                                        </Box> 
+                                        <Box className="stake-warmup-text " display="flex" alignItems="center">
+                                        <p style={{color: "white"}}>
+                                            Exiting Warm-Up will return your SPC balance to your account, but will not make you eligible for rebases on the current balance in warm-up.
+                                        </p>
+                                    </Box> 
                                 </div>
                             )}
                         </div>
