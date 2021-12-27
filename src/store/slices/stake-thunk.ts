@@ -201,7 +201,7 @@ export const changeForfeit = createAsyncThunk(
       // await sleep(7);
       // await dispatch(loadAccountDetails({ address, networkID, provider }));
       // dispatch(info(messages.balance_updated));
-      // return;
+      return;
     },
   );
   
